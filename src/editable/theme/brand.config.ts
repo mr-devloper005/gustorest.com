@@ -6,8 +6,8 @@ const { recipe } = getFactoryState()
 const productKind = getProductKind(recipe)
 
 export const slot4BrandConfig = {
-  siteName: siteIdentity.name,
-  tagline: siteIdentity.tagline,
+  siteName: process.env.NEXT_PUBLIC_SITE_NAME || process.env.NEXT_PUBLIC_BRAND_NAME || siteIdentity.name,
+  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || siteIdentity.tagline,
   domain: siteIdentity.domain,
   baseUrl: siteIdentity.url,
   productKind,
