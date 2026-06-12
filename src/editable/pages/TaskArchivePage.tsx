@@ -89,36 +89,36 @@ export function TaskArchiveView({ task, posts, pagination, category, basePath }:
   const label = taskConfig?.label || task
   const deck = taskDeck[task]
   const Icon = deck.icon
-  const archiveVars = { '--archive-bg': preset.colors.background, '--archive-text': preset.colors.foreground, '--archive-surface': preset.colors.surface, '--archive-accent': preset.colors.accent } as CSSProperties
+  const archiveVars = { '--archive-bg': '#30303c', '--archive-text': '#f8fafc', '--archive-surface': '#15171b', '--archive-accent': '#00d084' } as CSSProperties
   const categoryLabel = category === 'all' ? 'All categories' : CATEGORY_OPTIONS.find((item) => item.slug === category)?.name || category
 
   return (
     <EditableSiteShell>
       <main style={archiveVars} className="bg-[var(--archive-bg)] text-[var(--archive-text)]">
-        <section className="mx-auto grid max-w-[var(--editable-container)] gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-20">
-          <div className="rounded-[2.5rem] border border-[var(--editable-border)] bg-[var(--archive-surface)] p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-10">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--editable-border)] bg-white/70 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-[var(--archive-accent)]"><Icon className="h-4 w-4" /> {label}</div>
-            <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[0.95] tracking-[-0.07em] sm:text-6xl">{voice?.headline || `Browse ${label}`}</h1>
+        <section className="mx-auto grid max-w-[1160px] gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-16">
+          <div className="rounded-lg bg-[var(--archive-surface)] p-7 shadow-[0_24px_80px_rgba(0,0,0,0.18)] sm:p-10">
+            <div className="inline-flex items-center gap-2 rounded-md bg-[var(--archive-accent)] px-4 py-2 text-xs font-black uppercase text-[#07110d]"><Icon className="h-4 w-4" /> {label}</div>
+            <h1 className="mt-5 max-w-4xl text-5xl font-black leading-tight sm:text-6xl">{voice?.headline || `Browse ${label}`}</h1>
             <p className="mt-6 max-w-2xl text-base leading-8 opacity-70">{voice?.description || SITE_CONFIG.description}</p>
-            <div className="mt-6 rounded-[1.5rem] border border-[var(--editable-border)] bg-white/55 p-4 text-sm font-bold leading-7 opacity-75">{deck.promise}</div>
+            <div className="mt-6 rounded-lg border border-white/10 bg-white/[0.04] p-4 text-sm font-bold leading-7 text-white/70">{task === 'listing' ? 'Compare business names, categories, locations, contact details, and service summaries in compact cards.' : deck.promise}</div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href={basePath} className="rounded-full bg-[var(--archive-text)] px-5 py-3 text-sm font-black text-[var(--archive-bg)]">Browse all</Link>
-              <Link href="/search" className="rounded-full border border-[var(--editable-border)] px-5 py-3 text-sm font-black">Search posts</Link>
+              <Link href={basePath} className="rounded-md bg-[var(--archive-accent)] px-5 py-3 text-sm font-black text-[#07110d]">Browse all</Link>
+              <Link href="/search" className="rounded-md border border-white/10 px-5 py-3 text-sm font-black">Search listings</Link>
             </div>
           </div>
 
-          <form action={basePath} className="self-end rounded-[2rem] border border-[var(--editable-border)] bg-white/70 p-5 shadow-sm backdrop-blur">
+          <form action={basePath} className="self-end rounded-lg bg-[#15171b] p-5 shadow-sm">
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] opacity-55"><Filter className="h-4 w-4" /> Filter</div>
-            <select name="category" defaultValue={category} className="mt-4 h-12 w-full rounded-2xl border border-[var(--editable-border)] bg-white px-4 text-sm font-bold outline-none">
+            <select name="category" defaultValue={category} className="mt-4 h-12 w-full rounded-md border border-white/10 bg-white px-4 text-sm font-bold outline-none">
               <option value="all">All categories</option>
               {CATEGORY_OPTIONS.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
             </select>
-            <button className="mt-3 h-12 w-full rounded-2xl bg-[var(--archive-text)] text-sm font-black text-[var(--archive-bg)]">Apply</button>
+            <button className="mt-3 h-12 w-full rounded-md bg-[var(--archive-accent)] text-sm font-black text-[#07110d]">Apply</button>
             <p className="mt-3 text-xs font-bold opacity-55">Showing: {categoryLabel}</p>
           </form>
         </section>
 
-        <section className="mx-auto max-w-[var(--editable-container)] px-4 pb-16 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-[1160px] px-4 pb-16 sm:px-6 lg:px-8">
           {posts.length ? (
             <div className={deck.archiveClass}>
               {posts.map((post, index) => <ArchivePostCard key={post.id || post.slug} post={post} task={task} basePath={basePath} index={index} />)}
@@ -132,9 +132,9 @@ export function TaskArchiveView({ task, posts, pagination, category, basePath }:
           )}
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            {pagination.hasPrevPage ? <Link href={pageHref(basePath, category, page - 1)} className="rounded-full border border-[var(--editable-border)] bg-white px-5 py-3 text-sm font-black">Previous</Link> : null}
-            <span className="rounded-full bg-[var(--archive-text)] px-5 py-3 text-sm font-black text-[var(--archive-bg)]">Page {page} of {pagination.totalPages || 1}</span>
-            {pagination.hasNextPage ? <Link href={pageHref(basePath, category, page + 1)} className="rounded-full border border-[var(--editable-border)] bg-white px-5 py-3 text-sm font-black">Next</Link> : null}
+            {pagination.hasPrevPage ? <Link href={pageHref(basePath, category, page - 1)} className="rounded-md border border-white/10 bg-[#15171b] px-5 py-3 text-sm font-black">Previous</Link> : null}
+            <span className="rounded-md bg-[var(--archive-accent)] px-5 py-3 text-sm font-black text-[#07110d]">Page {page} of {pagination.totalPages || 1}</span>
+            {pagination.hasNextPage ? <Link href={pageHref(basePath, category, page + 1)} className="rounded-md border border-white/10 bg-[#15171b] px-5 py-3 text-sm font-black">Next</Link> : null}
           </div>
         </section>
       </main>
@@ -177,18 +177,18 @@ function ListingArchiveCard({ post, href }: { post: SitePost; href: string }) {
   const phone = getField(post, ['phone', 'telephone', 'mobile'])
   const website = getField(post, ['website', 'url'])
   return (
-    <Link href={href} className="group grid gap-5 rounded-[2rem] border border-[var(--editable-border)] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:grid-cols-[120px_1fr]">
-      <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-[1.5rem] bg-[var(--archive-bg)] ring-1 ring-[var(--editable-border)]">
+    <Link href={href} className="group grid gap-5 rounded-lg bg-[#15171b] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.18)] transition hover:-translate-y-1 sm:grid-cols-[120px_1fr]">
+      <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-md bg-[#30303c] ring-1 ring-white/10">
         {logo ? <img src={logo} alt="" className="h-full w-full object-cover" /> : <BriefcaseBusiness className="h-10 w-10 opacity-45" />}
       </div>
       <div className="min-w-0">
         <div className="flex flex-wrap gap-2">
-          <span className="rounded-full bg-[var(--archive-text)] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--archive-bg)]">Directory</span>
-          {location ? <span className="inline-flex items-center gap-1 rounded-full border border-[var(--editable-border)] px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em]"><MapPin className="h-3 w-3" /> {location}</span> : null}
+          <span className="rounded-md bg-[var(--archive-accent)] px-3 py-1 text-[10px] font-black uppercase text-[#07110d]">Directory</span>
+          {location ? <span className="inline-flex items-center gap-1 rounded-md border border-white/10 px-3 py-1 text-[10px] font-black uppercase text-white/70"><MapPin className="h-3 w-3" /> {location}</span> : null}
         </div>
-        <h2 className="mt-4 text-2xl font-black leading-tight tracking-[-0.05em]">{post.title}</h2>
-        <p className="mt-3 line-clamp-2 text-sm leading-6 opacity-65">{getSummary(post)}</p>
-        <div className="mt-4 grid gap-2 text-xs font-bold opacity-70 sm:grid-cols-2">
+        <h2 className="mt-4 text-2xl font-black leading-tight text-white">{post.title}</h2>
+        <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/65">{getSummary(post)}</p>
+        <div className="mt-4 grid gap-2 text-xs font-bold text-white/60 sm:grid-cols-2">
           {phone ? <span>Phone: {phone}</span> : null}
           {website ? <span>Website available</span> : null}
         </div>
